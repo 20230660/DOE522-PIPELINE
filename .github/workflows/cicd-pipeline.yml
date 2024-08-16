@@ -58,3 +58,23 @@ jobs:
       - name: Deploy to Staging
         run: |
           echo "fake deployment to staging"
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      # Notify the Discord Channel when a Build Fails
+      - name: Notify on Build Failure
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d "{\"content\": \"⚠️ The CI/CD pipeline encountered an error on commit: $GITHUB_SHA. Please investigate the issue.\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      # Notify the Discord Channel when a Build Succeeds
+      - name: Notify on Success
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d "{\"content\": \"✅ The CI/CD pipeline successfully completed for commit: $GITHUB_SHA. Good job!\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
