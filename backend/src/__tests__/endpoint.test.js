@@ -6,7 +6,7 @@ describe("GET /question3", () => {
     request(app)
       .get("/question3")
       .expect(200)
-      .expect("Hello! This is the response for Question 3.")
+      .expect("Hello!")
       .end((err, res) => {
         if (err) return done(err);
         done();

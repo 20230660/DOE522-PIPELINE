@@ -4,7 +4,7 @@ const port = 3000;
 
 // Define a route for Question 3
 app.get('/question3', (req, res) => {
-    res.send('Hello! This is the response for Question 3.');
+    res.send('Hello!');
 });
 
 // Start the server
